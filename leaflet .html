@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Leaflet Web Map</title>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" />
+	<script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"></script>
+	
+	<!-- memanggil bootstrap -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+	<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+	
+	<script src="./bundle.js"></script>
+	
+	<link rel="stylesheet" type="text/css" href="./Leaflet.GraphicScale.min.css">
+	
+	<script src="./Leaflet.GraphicScale.min.js"></script>
+
+	
+	<style>
+	#map {
+		height: calc(100vh - 60px);
+	}
+	p {
+		text-align: justify;
+	}
+	br {
+		text-align: center
+		}
+	</style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Peta Tempat Penting Kabupaten Sukabumi</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="https://taufikteye.github.io/bismilah.Taufikteye.github.io/">ABOUT<span class="sr-only">(current)</span></a>
+      </li>
+     
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" onclick="cari()">Cari</button>
+    </form>
+  </div>
+</nav>
+	<!-- container peta -->
+	<div id="map"></div>
+	
+	<!-- script peta -->
+	<script src="./jogja.js"></script>
+	
+    <script>
+	var map = L.map('map',{
+        center: [-6.921481, 106.925698],
+        zoom: 10
+        });
+		
+	var esri = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+	}).addTo(map);
+	
+	var carto = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}{r}.png', {
+	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+	subdomains: 'abcd',
+	maxZoom: 19
+	});
+	
+	var	ma="<br><b>Masjid Agung Kota Sukabumi</b><br/><img src='Masjid.jpg' alt='Masjid' position='center' width='250px' /><p>Masjid Agung Sukabumi yang terletak di Kelurahan Gunung Parang Kecamatan Cikole ini sudah berdiri pada akhir abad ke 19. Lokasinya cukup strategis karena berada tepat di jantung Kota Sukabumi. Berdasarkan sejarah masjid Agung Kota Sukabumi ini dibangun diatas tanah wakaf dari Ahmad Juwaeni di penghujung abad ke 19. Di masjid inilah bendera merah putih pertamakalinya berkibar di wilayah Kota Sukabumi.</p>",
+		Vh = "<br><b>Vihara Widhi Sakti</b><br/><img src='Vihara.jpg' alt='Vihara' width='250px' /><p>Vihara Widhi Sakti terletak di Jalan Pajagalan, Kecamatan Warudoyong. Vihara ini merupakan tempat ibadah agama Buddha aliran Mahayana yang mayoritas umatnya adalah golongan etnis Tionghoa. Bangunan seluas sekitar 900 m2 ini pertama kali dibangun pada tahun 1916 berukuran masih kecil. Kemudian pada tahun 1986 mengalami renovasi serta perluasan bangunan. Vihara ini dimiliki dan dikelola oleh Yayasan Widhi Sakti. Secara umum bangunan ini didominasi unsur-unsur tradisional Cina yang kental sepert ornamen berbentuk naga, pengunaan warna merah dan kuning, dan atap pelana kuda menunjukkan hal tersebut.</p>",
+		Gj = "<br><b>Gedung Juang 45</b><br/><img src='Juang.jpg' alt='Juang' width='250px' /><p>Gedung Juang 45 berlokasi di Jalan Veteran 1 No.2, Selabatu, Kecamatan Cikole. Dahulu bangunan tersebut dikenal dengan nama Hotel Victoria, pemiliknya seorang pengusaha berkebangsaan Jerman, AA Lenne alias Tuan Leni. Gedung juang 45 dirancang dan dibangun oleh Arsitek A.F Aalbers dan Prof. Charles Prosper Wolff Schoemaker. Sejak dibangun pada tahun 1899, gedung tersebut digunakan sebagai tempat pertemuan masyarakat, hingga nama gedung ini tetap dikenal sebagai Societeit Soekamanah pada masa tersebut. Bangunan ikonik ini sempat dikuasai Jepang selama tiga tahun sejak 1942, setelah itu berhasil dikuasai rakyat Sukabumi untuk kemudian dijadikan markas Barisan Keamanan Rakyat (BKR).</p>",
+		pdp = "<br><b>Pendopo Kabupaten Sukabumi</b><br/><img src='pendopo.jpg' alt='pendopo' width='250px'/><p>Bangunan tersebut menggunakan gaya arsitektur Indische Empire.</p>",
+		Cp = "<br><b>Kampung Adat Ciptagelar</b><br/><img src='ciptagelar.jpg' alt='ciptagelar' width='250px'/><p>Kampung Adat Ciptagelar adalah sebuah kampung adat yang berada di wilayah Kampung Sukamulya Desa Sirnaresmi, Kecamatan Cisolok, Kabupaten Sukabumi. Ciri khasnya terletak pada lokasi dan bangunan rumah yang masih berpegang pada tradisi orang Sunda zaman dulu. Orang yang menempati desa Ciptagelar dikenal dengan sebutan kasepuhan. Kata kasepuhan berasal dari kata sesepuh menggunakan kata ka-an yang berarti tempat tinggal seorang sesepuh. Ini merujuk pada masyarakat di dalamnya yang masih memegang teguh tradisi leluhur</p>",
+		Jb = "<br><b>Jembatan Situ Gunung</b><br/><img src='jembatan.jpg' alt='jembatan' width='250px'/><p>Jembatan Situ Gunung Sukabumi merupakan jembatan gantung yang memiliki panjang 250 meter dengan ketinggian 150 meter. Tak heran jika jembatan ini dinobatkan sebagai jembatan gantung terpanjang se-Asia.</p>",
+		Py = "<br><b>Penangkaran Penyu Pantai Pangumbahan</b><br/><img src='pangumbahan.png' alt='pangumbahan' width='250px'/><p>Pantai pangumbahan merupakan salah satu pantai8 yang digunakan sebagai observasi untuk penangkaran penyu. hal ini terjadi karena di Pantai pangumbahan memiliki ombak yang besar dan tenang dan tidak ramai.</p>",
+		Pns = "<br<b>Mata Air Panas Cisolok Pelabuhanratu</b><br/><img src='cisolok.jpg' alt='cisolok' width='250px' /><p>Geiser Palabuhanratu juga merupakan sebuah tempat wisata sekaligus satu-satunya geiser di Jawa Barat yang masuk kawasan Ciletuh Palabuhanratu Geopark.<center></p>",
+		Elg = "<br><b>Konservasi Elang Jawa</b><br/><img src='elang.jpg' alt='elang' width='250px' /><p> Taman wisata Parangro merupakan salah satu tempat observasi untuk Elang Jawa</p>",
+		Bs = "<br><b>Baso Sido Makmur</b><br/><img src='baso.jpg' alt='baso' width='250px'/><p> Baso Terfavorit yang wajib untuk jajani, apabila kita melukan perjalan wisata ke daerah pantai ujung genteng</p>";
+	
+	var Masgung = L.marker([-6.921223, 106.925297]).bindPopup(ma),
+		Vihara = L.marker([-6.925303, 106.925581]).bindPopup(Vh),
+		Gedjuang = L.marker([-6.918920, 106.927476]).bindPopup(Gj),
+		Pendopo = L.marker([-6.922062, 106.925541]).bindPopup(pdp),
+		Cipta = L.marker([-6.802621, 106.498305]).bindPopup(Cp),
+		Jembatan = L.marker([-6.836320, 106.927075]).bindPopup(Jb),
+		Penyu = L.marker([-7.329551, 106.397509]).bindPopup(Py),
+		Panas = L.marker([-6.933949, 106.453486]).bindPopup(Pns),
+		Elang = L.marker([-6.828358, 106.917452]).bindPopup(Elg),
+		Baso = L.marker([-7.341986, 106.564510]).bindPopup(Bs);
+	
+	var Sukabumi = L.layerGroup([ Masgung, Vihara, Gedjuang, Pendopo, Cipta, Jembatan, Penyu, Panas, Elang, Baso ]);
+		
+	var baseMaps = {
+		"Citra Satelit": esri,
+		"Peta Carto": carto
+	};
+	
+	var overlayMaps = {
+		"Sukabumi": Sukabumi
+	};
+	
+	L.control.layers(baseMaps, overlayMaps).addTo(map);
+	L.Control.geocoder().addTo(map);
+	
+	L.easyPrint({
+		title: 'My awesome print button',
+		position: 'topright',
+		sizeModes: ['A4Portrait', 'A4Landscape']
+	}).addTo(map);
+	var graphicScale = L.control.graphicScale({
+		fill: "fill",
+		doubleLine: "true",
+		showSubunits: "true"
+	}).addTo(map);
+	
+	//---------------------------------------------------------
+	//Latihan 2 alert 
+	
+	function cari() {
+	alert ('tombol ditekan!');
+	}
+	map.locate({setView: true, maxZoom: 16});
+	function onLocationFound(e) {
+    var radius = e.accuracy / 2;
+
+    L.marker(e.latlng).addTo(map)
+        .bindPopup("You are within " + radius + " meters from this point").openPopup();
+
+    L.circle(e.latlng, radius).addTo(map);
+	}
+
+map.on('locationfound', onLocationFound);
+	
+	L.geoJSON(jogjageojson,{
+	style: function(feature) {
+        switch (feature.properties.KABUPATEN) {
+            case 'Gunung Kidul': return {color: "#ff9900"};
+            case 'Sleman':   return {color: "#80e5ff"};
+			case 'Bantul':   return {color: "#ff8080"};
+			case 'Yogyakarta':   return {color: "#ff80df"};
+			case 'Kulon Progo':   return {color: "#80ff80"};
+        }
+	},
+	onEachFeature: function (feature, layer) {
+		layer.bindPopup('Kecamatan ' + '<strong>'+ feature.properties.KECAMATAN) + '</strong>';
+	}
+	}).addTo(map);
+    </script>
+</body>
+</html>
